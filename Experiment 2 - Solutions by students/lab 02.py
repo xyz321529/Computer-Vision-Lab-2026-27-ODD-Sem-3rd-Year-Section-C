@@ -1,0 +1,78 @@
+import cv2 import numpy
+as np
+import matplotlib.pyplot as plt
+img = cv2.imread("my_pic01.png") if img is
+None:
+print("Image not found!") else:
+print("Image loaded successfully.") gray =
+cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+plt.figure(figsize=(8, 5)) plt.imshow(gray, cmap="gray")
+plt.title("Original Grayscale Image")
+plt.axis("off") plt.show()
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1) plt.imshow(gray, cmap="gray")
+plt.title("Original Image") plt.axis("off")
+plt.subplot(1, 2, 2)
+plt.hist(gray.ravel(), bins=256, range=[0, 256])
+plt.title("Original Histogram") plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+plt.tight_layout()
+plt.show()
+min_val = np.min(gray) max_val =
+np.max(gray)
+contrast_stretched = ((gray - min_val) / (max_val - min_val) * 255).astype(np.uint8)
+plt.figure(figsize=(8, 5))
+plt.imshow(contrast_stretched, cmap="gray") plt.title("Contrast Stretched Image")
+plt.axis("off") plt.show()
+hist_equalized = cv2.equalizeHist(gray)
+plt.figure(figsize=(8, 5))
+plt.imshow(hist_equalized, cmap="gray") plt.title("Histogram Equalized Image")
+plt.axis("off") plt.show()
+clahe = cv2.createCLAHE( clipLimit=2.0,
+tileGridSize=(8, 8)
+) clahe_image = clahe.apply(gray)
+plt.figure(figsize=(8, 5)) plt.imshow(clahe_image, cmap="gray")
+plt.title("CLAHE Enhanced Image")
+plt.axis("off") plt.show()
+plt.figure(figsize=(15, 5))
+plt.subplot(1, 3, 1)
+plt.hist(gray.ravel(), bins=256, range=[0, 256])
+plt.title("Original Histogram") plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+plt.subplot(1, 3, 2)
+plt.hist(hist_equalized.ravel(), bins=256, range=[0, 256])
+plt.title("Histogram Equalization") plt.xlabel("Pixel Intensity")
+plt.ylabel("Frequency")
+plt.subplot(1, 3, 3)
+plt.hist(clahe_image.ravel(), bins=256, range=[0, 256]) plt.title("CLAHE
+Histogram") plt.xlabel("Pixel Intensity") plt.ylabel("Frequency")
+plt.tight_layout()
+plt.show()
+plt.figure(figsize=(15, 10))
+plt.subplot(2, 2, 1) plt.imshow(gray, cmap="gray")
+plt.title("Original Image") plt.axis("off")
+plt.subplot(2, 2, 2)
+plt.imshow(contrast_stretched, cmap="gray") plt.title("Contrast
+Stretching") plt.axis("off")
+plt.subplot(2, 2, 3)
+plt.imshow(hist_equalized, cmap="gray") plt.title("Histogram
+Equalization") plt.axis("off")
+plt.subplot(2, 2, 4)
+plt.imshow(clahe_image, cmap="gray")
+plt.title("CLAHE") plt.axis("off")
+plt.tight_layout()
+plt.show()
+print("IMAGE CONTRAST ENHANCEMENT ANALYSIS") print("------------------------------------")
+print("1. Original Image:")
+print(" May have low contrast and limited intensity distribution.")
+print("\n2. Contrast Stretching:")
+print(" Expands the intensity range and improves contrast.")
+print("\n3. Histogram Equalization:")
+print(" Redistributes pixel intensities to improve global contrast.")
+print("\n4. CLAHE:")
+print(" Performs local contrast enhancement while limiting noise amplification."
+print("CONCLUSION") print("-----------")
+print("Contrast enhancement techniques were successfully implemented.") print("Contrast stretching
+improves the dynamic intensity range.") print("Histogram Equalization improves global image contrast.")
+print("CLAHE provides local contrast enhancement and is useful for")
+print("images with varying illumination.")
